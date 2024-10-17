@@ -1,35 +1,74 @@
 import { useState, useEffect } from "react";
-let htmltext = `<body>
+
+let htmlContent = `<body>
   <div class="text">
-    Code An Image
+    Abc..
   </div>
-</body>
-<style>
+</body>`;
+
+let cssContent = `<style>
    body {
-      font-family: Arial;
+      padding: 2rem;
+      margin: 0;
+
    }
    .text {
       font-weight: 800;
       font-size: 60px;
-      color: #1D8F89;
   }
-<style>
-`;
+</style>`;
 
-export const setHtmlText = (value: string) => {
-  htmltext = value;
+let document = htmlContent.concat(cssContent);
+
+export const setHtmlContent = (value: string) => {
+  htmlContent = value;
 };
 
-export const useHtmlText = () => {
-  const [content, setContent] = useState(htmltext);
+export const setCssContent = (value: string) => {
+  cssContent = value;
+};
+
+export const setDocument = (value: string) => {
+  document = value;
+};
+
+export const useHtmlContent = () => {
+  const [content, setContent] = useState(htmlContent);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setContent(htmltext);
+      setContent(htmlContent);
     }, 100);
 
     return () => clearInterval(interval);
   }, []);
+  useDocumentText();
+  return content;
+};
 
+export const useCssContent = () => {
+  const [content, setContent] = useState(cssContent);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setContent(cssContent);
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+  useDocumentText();
+  return content;
+};
+
+export const useDocumentText = () => {
+  const [content, setContent] = useState(document);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setContent(htmlContent.concat(cssContent));
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
   return content;
 };

@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 #root {
-  background: linear-gradient(to left, #8eebff, #00dd73);
+  background: #243642;
   font-family: "Montserrat", sans-serif;
 }

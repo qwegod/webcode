@@ -1,4 +1,6 @@
 export interface ExportProps {
-  text: string;
+  value: string;
   htmlContent: string;
+  bodyContent: string;
+  cssContent: string;
 }

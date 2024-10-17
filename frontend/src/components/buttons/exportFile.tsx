@@ -2,32 +2,86 @@ import axios from "axios";
 import { ExportProps } from "../../types/exportFileProps";
 import { useState } from "react";
 
-function ExportFileButton({ text, htmlContent }: ExportProps) {
+function ExportFileButton({
+  value,
+  htmlContent,
+  bodyContent,
+  cssContent,
+}: ExportProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const handleClick = async () => {
     setIsAnimating(true);
     try {
-      const response = await axios.post(
-        "http://localhost:4000/export",
-        htmlContent,
-        {
-          responseType: "blob",
-          headers: {
-            "Content-Type": "text/plain",
-          },
+      switch (value) {
+        case "html":
+          {
+            const url = window.URL.createObjectURL(
+              new Blob([htmlContent as BlobPart])
+            );
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "index.html";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          }
+          break;
+        case "body": {
+          const url = window.URL.createObjectURL(
+            new Blob([bodyContent as BlobPart])
+          );
+
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "body.txt";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          break;
         }
-      );
 
-      const url = window.URL.createObjectURL(
-        new Blob([response.data as BlobPart])
-      );
+        case "css": {
+          const url = window.URL.createObjectURL(
+            new Blob([cssContent as BlobPart])
+          );
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "image.png";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "style.css";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          break;
+        }
+        case "image":
+          {
+            const response = await axios.post(
+              "http://localhost:4000/export/image",
+              htmlContent,
+              {
+                responseType: "blob",
+                headers: {
+                  "Content-Type": "text/plain",
+                },
+              }
+            );
+
+            const url = window.URL.createObjectURL(
+              new Blob([response.data as BlobPart])
+            );
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "image.png";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          }
+          break;
+        default:
+          break;
+      }
     } catch (error) {
       console.error("Error exporting file:", error);
     } finally {
@@ -36,13 +90,14 @@ function ExportFileButton({ text, htmlContent }: ExportProps) {
   };
 
   return (
-    <button
-      onClick={handleClick}
-      className={`transition-opacity delay-50 ease-linear hover:opacity-100 shadow-[0_5px_5px_0px_rgba(0,0,0,0.2)] opacity-70 rounded-[28px] w-28 h-12 bg-gradient-to-r from-[#35FEF2] to-[#88E367] text-black text-[26px] font-medium ${
-        isAnimating ? "animate-bounce" : ""
-      }`}
-    >
-      {text}
+    <button onClick={handleClick}>
+      <img
+        className={`${
+          isAnimating && "animate-bounce 1s infinite"
+        } hover:opacity-100 ease-linear transition-opacity duration-300 w-6 h-6 opacity-70`}
+        alt="export"
+        src="/icons/export.png"
+      />
     </button>
   );
 }

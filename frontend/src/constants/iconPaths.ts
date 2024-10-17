@@ -1,5 +1,6 @@
 const imagePaths = {
   clear: "/icons/clear.png",
+  logo: "/icons/logo.png",
   copy: "/icons/copy.png",
   css: "/icons/css.png",
   dark: "/icons/dark.png",
