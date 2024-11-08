@@ -3,10 +3,10 @@ Getting Started
 Follow these instructions to set up and run the project on your local machine.
 Installation
 
-    Clone the repository:
+Clone the repository:
 
-git clone https://github.com/yourusername/yourproject.git
-cd yourproject
+    git clone https://github.com/qwegod/webcode.git
+    cd webcode
 
 Install dependencies for both frontend and backend:
 
