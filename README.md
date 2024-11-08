@@ -1,4 +1,8 @@
-Getting Started
+# WebCode
+
+An application to make page in browser 
+
+# Getting Started
 
 Follow these instructions to set up and run the project on your local machine.
 Installation
